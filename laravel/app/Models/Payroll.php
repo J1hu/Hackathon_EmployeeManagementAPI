@@ -5,16 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+class Payroll extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'firstName',
-        'lastName',
-        'position',
-        'sickLeaveCredits',
-        'vacationLeaveCredits',
-        'hourlyRate'
+        'employee_id',
+        'startDate',
+        'endDate',
+        'timeInDate',
+        'timeOutDate',
+        'markDate',
+        'type',
     ];
+
 }
