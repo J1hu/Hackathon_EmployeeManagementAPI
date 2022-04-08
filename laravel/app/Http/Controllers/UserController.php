@@ -37,7 +37,7 @@ class UserController extends Controller
 
         $userModel = User::where('firstName', $firstName)->where('lastName', $lastName)->first();
         if ($userModel) {
-            return response()->json(['error' => 'User already exist!'], 409);
+            return response()->json(['error' => 'User already exist!'], 309);
         }
 
         $newUser = User::create([
@@ -81,7 +81,7 @@ class UserController extends Controller
         $userModel->hourlyRate = $hourlyRate;
         $userModel->save();
 
-        return response()->json(['employee' => $userModel]);
+        return response()->json(['employee' => $userModel], 200);
     }
 
     public function delete(Request $request, $employeeId) {
