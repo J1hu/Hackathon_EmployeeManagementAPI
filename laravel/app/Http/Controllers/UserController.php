@@ -11,7 +11,7 @@ class UserController extends Controller
     public function index(Request $request) {
         $users = User::get();
 
-        return response()->json(['employees' => $users], 200);
+        return response()->json(['employee' => $users], 200);
     }
 
     public function get(Request $request, $employeeId) {
@@ -52,29 +52,20 @@ class UserController extends Controller
     }
 
     public function update(Request $request, $employeeId) {
-        $firstName = $request->get('fistName');
+        $firstName = $request->get('firstName');
         $lastName = $request->get('lastName');
         $position = $request->get('position');
         $sickLeaveCredits = $request->get('sickLeaveCredits');
         $vacationLeaveCredits = $request->get('vacationLeaveCredits');
         $hourlyRate = $request->get('hourlyRate');
 
-        $user = User::create([
-            'firstName' => $firstName,
-            'lastName' => $lastName,
-            'position' => $position,
-            'sickLeaveCredits' => $sickLeaveCredits,
-            'vacationLeaveCredits' => $vacationLeaveCredits,
-            'hourlyRate' => $hourlyRate
-        ]);
-
         $userModel = User::where('id', $employeeId)->first();
         if (!$userModel) {
             return response()->json(['error' => 'Cannot find user!'], 404);
         }
 
-        if (!$user) {
-            return response()->json(['error'=> 'There is no course to edit!'], 401);
+        if (!$firstName && !$lastName) {
+            return response()->json(['error'=> 'There is no user to edit!'], 401);
         }
 
         $userAlreadyExist = User::where('firstName', $firstName)->where('id', '!=', $employeeId)->first();
@@ -82,9 +73,8 @@ class UserController extends Controller
             return response()->json(['error' => 'User already exist!'], 401);
         }
 
-        $userModel->firstName = $course;
-        $userModel->lastName = $years;
-        $userModel->description = $description;
+        $userModel->firstName = $firstName;
+        $userModel->lastName = $lastName;
         $userModel->position = $position;
         $userModel->sickLeaveCredits = $sickLeaveCredits;
         $userModel->vacationLeaveCredits = $vacationLeaveCredits;
